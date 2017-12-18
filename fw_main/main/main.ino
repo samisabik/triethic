@@ -43,6 +43,8 @@ void setup() {
   delay(500);
   Serial.println("----------------------------------");
   delay(500);
+  data_s = getDistance();
+  sendMessage(data_s);
 }
 
 void loop() {
