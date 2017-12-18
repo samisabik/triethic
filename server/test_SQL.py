@@ -10,7 +10,7 @@ exists = False
 
 try:
      
-    con = psycopg2.connect(database='trie', user='admin_trie', password='blabla') 
+    con = psycopg2.connect(database='triethic', user='admin', password='KrOQpkWVZeZPGF4O') 
     cur = con.cursor()
     table_str = "test"
     cur.execute("select exists(select relname from pg_class where relname='" + table_str + "')")

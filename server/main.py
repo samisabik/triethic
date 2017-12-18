@@ -17,7 +17,7 @@ def add_message():
     print "TIME : " + str(ts)
     try:
      
-        con = psycopg2.connect(database='sami', user='sami') 
+        con = psycopg2.connect(database='triethoic', user='admin', password='KrOQpkWVZeZPGF4O') 
         cur = con.cursor()
         cur.execute("INSERT INTO " + content['ID'].lower() + "(data,ts) VALUES(" + content['data'] +",'"+ str(ts) +"')")
         #cur.execute("INSERT INTO " + content['ID'].lower() + "(data) VALUES(" + content['data'] +")")
