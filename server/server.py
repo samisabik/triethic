@@ -4,30 +4,23 @@ import psycopg2
 import sys
 
 con = None
-exists = False
-
 app = Flask(__name__)
 
 @app.route('/api', methods=['POST'])
 def read_data():
 
-    ts = datetime.datetime.now().strftime("%d%m%y-%H:%M")
-    content = request.get_json(silent=True)
-    device_ID = str(content['device']).lower()
-    value = content['data']
-    
+    rx_data = request.get_json(silent=True)
+    sensor_ID = str(rx_data['device']).lower()
+    sensor_level = rx_data['data']
+    time = datetime.datetime.now().strftime("%d%m%y-%H:%M")
+
     try:
         con = psycopg2.connect(database='triethic', user='admin', password='KrOQpkWVZeZPGF4O')
         cur = con.cursor()
-        cur.execute("select exists(select relname from pg_class where relname='d_" + device_ID + "')")
-        exists = cur.fetchone()[0]
-        
-        if not exists:
-            print "Creating table for " + device_ID
-            cur.execute("CREATE TABLE d_"+ device_ID + "(id SERIAL, ts TEXT, data INT)")
-            con.commit()
-        
-        cur.execute("INSERT INTO d_" + device_ID + "(ts,data) VALUES(" + value +",'"+ str(ts) +"')")
+
+        cur.execute("UPDATE device_list SET last_value = " + sensor_level + " WHERE device_id = '" + sensor_ID + "'")
+
+        cur.execute("INSERT INTO d_" + sensor_ID + "(ts,data) VALUES(" + sensor_level +",'"+ str(time) +"')")
         con.commit()
 
     except psycopg2.DatabaseError, e:
