@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.route('/api', methods=['POST'])
 def read_data():
     rx_data = request.get_json(silent=True)
-    print "RX : " + rx_data
+    print rx_data
     sensor_ID = rx_data['device']
     sensor_level = int(rx_data['data'],16)
     sensor_rssi = rx_data['rssi']
