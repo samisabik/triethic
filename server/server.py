@@ -48,7 +48,7 @@ def read_data():
         if con:
             con.close()
     return ('', 200)
-    time.sleep(60)
+    time.sleep(180)
 
 if __name__ == '__main__':
     app.run(host= '0.0.0.0',debug=False)
