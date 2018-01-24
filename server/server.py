@@ -10,8 +10,8 @@ app = Flask(__name__)
 
 @app.route('/api', methods=['POST'])
 def read_data():
-
     rx_data = request.get_json(silent=True)
+    print "RX : " + rx_data
     sensor_ID = rx_data['device']
     sensor_level = int(rx_data['data'],16)
     sensor_rssi = rx_data['rssi']
@@ -39,6 +39,7 @@ def read_data():
         	cur.execute("UPDATE device_list SET alarm = FALSE WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 
         con.commit()
+        time.sleep(180)
 
     except psycopg2.DatabaseError, e:
         print 'Error %s' % e    
@@ -48,7 +49,6 @@ def read_data():
         if con:
             con.close()
     return ('', 200)
-    time.sleep(180)
 
 if __name__ == '__main__':
     app.run(host= '0.0.0.0',debug=False)
