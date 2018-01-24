@@ -10,15 +10,15 @@ app = Flask(__name__)
 def read_data():
 
     rx_data = request.get_json(silent=True)
-    sensor_ID = str(rx_data['device']).lower()
-    sensor_level = str(rx_data['data'])
-    sensor_rssi = str(rx_data['rssi'])
-    ts = str(time.time())
+    sensor_ID = rx_data['device']
+    sensor_level = int(rx_data['data'],16)
+    sensor_rssi = rx_data['rssi']
+    ts = time.time()
 
     try:
         con = psycopg2.connect(database='triethic', user='admin', password='KrOQpkWVZeZPGF4O')
         cur = con.cursor()
-        cur.execute("UPDATE device_list SET last_value = " + sensor_level + ",last_seen = " + ts + ",last_rssi = " + sensor_rssi + " WHERE device_id = 'd_" + sensor_ID + "'")
+        cur.execute("UPDATE device_list SET last_value = " + str(sensor_level) + ",last_seen = " + str(ts) + ",last_rssi = " + str(sensor_rssi) + " WHERE device_id = 'd_" + str(sensor_ID).lower + "'")
         if (rx_data['data'] < 30):
         	cur.execute("UPDATE device_list SET alarm = TRUE WHERE device_id = 'd_" + sensor_ID + "'")
         else:
