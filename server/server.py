@@ -34,8 +34,8 @@ def read_data():
 			server.ehlo()
 			server.starttls()
 			server.login("triethic.sensor@gmail.com", "EEbsoYoy")
-			msg = "I'm full at " + str(location) + " ! Please empty me :)"
-			server.sendmail("triethic.sensor@gmail.com", str(email), msg)
+			msg = "I'm full at " + str(location) + ". Please empty me !"
+			server.sendmail('triethic.sensor@gmail.com', email, msg)
 			print "email sent!"
 			cur.execute("UPDATE device_list SET alarm = TRUE WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 

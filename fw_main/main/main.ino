@@ -1,11 +1,7 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 #include <SoftReset.h>
-#include <SPI.h>
-#include <SparkFunDS3234RTC.h>
 
-#define   DS13074_CS_PIN    10
-#define   DS13074_INT_PIN   7
 #define   WISOL_RX_PIN      6
 #define   WISOL_TX_PIN      5
 #define   SENSOR_TRIG_PIN   3
@@ -23,15 +19,8 @@ void setup() {
   pinMode(WISOL_TX_PIN, OUTPUT);
   pinMode(SENSOR_TRIG_PIN, OUTPUT);
   pinMode(SENSOR_ECHO_PIN, INPUT);
-  pinMode(DS13074_INT_PIN, INPUT_PULLUP);
 
   Sigfox.begin(9600);
-
-  rtc.begin(DS13074_CS_PIN);
-  rtc.autoTime();
-  rtc.update();
-  rtc.enableAlarmInterrupt();
-  rtc.setAlarm2(00);
   
   delay(2000);
   Serial.println("\n----------------------------------");
@@ -52,14 +41,11 @@ void setup() {
 }
 
 void loop() {
-if (!digitalRead(DS13074_INT_PIN) && rtc.alarm2()) {
-    rtc.update();
     data_s = getDistance();
     sendMessage(data_s);
-    printTime();
     Serial.print("/ payload : ");
     Serial.println(data_s);
-  }
+    delay(300000);
 }
 
 String getID(){
@@ -124,13 +110,3 @@ int getDistance() {
   return distance;
 }
 
-void printTime()
-{
-  Serial.print(String(rtc.hour()) + ":");
-  if (rtc.minute() < 10)
-    Serial.print('0');
-  Serial.print(String(rtc.minute()) + ":"); 
-  if (rtc.second() < 10)
-    Serial.print('0'); 
-  Serial.print(String(rtc.second()));
-}
