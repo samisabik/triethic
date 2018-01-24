@@ -28,7 +28,9 @@ def read_data():
 			email = cur.fetchall()
 			cur.execute("SELECT sensor_location FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 			location = cur.fetchall()
-			server = smtplib.SMTP('smtp.gmail.com', 587)
+			server = smtplib.SMTP('smtp.gmail.com:587')
+			server.ehlo()
+			server.starttls()
 			server.login("triethic.sensor@gmail.com", "EEbsoYoy")
 			msg = "I'm full at " + location + " ! Please empty me :)"
 			server.sendmail("triethic.sensor@gmail.com", email, msg)
