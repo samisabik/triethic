@@ -12,7 +12,8 @@ def read_data():
     rx_data = request.get_json(silent=True)
     sensor_ID = str(rx_data['device']).lower()
     sensor_level = rx_data['data']
-    time = datetime.datetime.now().strftime("%d%m%y-%H:%M")
+    sensor_rssi = rx_data['rssi']
+    ts = time.time()
 
     try:
         con = psycopg2.connect(database='triethic', user='admin', password='KrOQpkWVZeZPGF4O')
@@ -20,7 +21,7 @@ def read_data():
 
         cur.execute("UPDATE device_list SET last_value = " + sensor_level + " WHERE device_id = '" + sensor_ID + "'")
 
-        cur.execute("INSERT INTO d_" + sensor_ID + "(time,data) VALUES(" + sensor_level +",'"+ str(time) +"')")
+        cur.execute("INSERT INTO d_" + sensor_ID + "(ts,data,rssi) VALUES(" + ts +"," + sensor_level + "," + sensor_rssi +")")
         con.commit()
 
     except psycopg2.DatabaseError, e:
