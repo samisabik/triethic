@@ -18,7 +18,7 @@ def read_data():
     try:
         con = psycopg2.connect(database='triethic', user='admin', password='KrOQpkWVZeZPGF4O')
         cur = con.cursor()
-        cur.execute("UPDATE device_list SET last_value = " + str(sensor_level) + ",last_seen = " + str(ts) + ",last_rssi = " + str(sensor_rssi) + " WHERE device_id = 'd_" + str(sensor_ID).lower + "'")
+        cur.execute("UPDATE device_list SET last_value = " + str(sensor_level) + ",last_seen = " + str(ts) + ",last_rssi = " + str(sensor_rssi) + " WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
         if (rx_data['data'] < 30):
         	cur.execute("UPDATE device_list SET alarm = TRUE WHERE device_id = 'd_" + sensor_ID + "'")
         else:
