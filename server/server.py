@@ -24,10 +24,10 @@ def read_data():
         cur.execute("UPDATE device_list SET last_value = " + str(sensor_level) + ",last_seen = " + str(ts) + ",last_rssi = " + str(sensor_rssi) + " WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 
         if (sensor_level < full_limit):
-			cur.execute("SELECT email_alarm FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
+			cur.execute("SELECT sensor_location,email_alarm FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 			email = str(cur.fetchone()[0])
-			cur.execute("SELECT sensor_location FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 			location = str(cur.fetchone()[0])
+			print location,email
 			server = smtplib.SMTP('smtp.gmail.com:587')
 			server.ehlo()
 			server.starttls()
