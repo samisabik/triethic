@@ -19,7 +19,7 @@ def read_data():
         con = psycopg2.connect(database='triethic', user='admin', password='KrOQpkWVZeZPGF4O')
         cur = con.cursor()
 
-        cur.execute("UPDATE device_list SET last_value = " + sensor_level + ",last_seen = " + ts + " WHERE device_id = '" + sensor_ID + "'")
+        cur.execute("UPDATE device_list SET last_value = " + sensor_level + ",last_seen = " + ts + " WHERE device_id = 'd_" + sensor_ID + "'")
         con.commit()
 
     except psycopg2.DatabaseError, e:
