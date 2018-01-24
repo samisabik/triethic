@@ -28,17 +28,13 @@ def read_data():
 			data_tmp = cur.fetchone()
 			email = str(data_tmp[1])
 			location = str(data_tmp[0])
-			print "loc : " + location
-			print "email : " + email
 			server = smtplib.SMTP('smtp.gmail.com:587')
 			server.ehlo()
 			server.starttls()
 			server.login("triethic.sensor@gmail.com", "EEbsoYoy")
 			msg = "I'm full at " + str(location) + ". Please empty me !"
 			server.sendmail('triethic.sensor@gmail.com', email, msg)
-			print "email sent!"
 			cur.execute("UPDATE device_list SET alarm = TRUE WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
-
         else:
         	cur.execute("UPDATE device_list SET alarm = FALSE WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 
@@ -51,7 +47,7 @@ def read_data():
     finally:
         if con:
             con.close()
-
+    time.sleep(60)
     return ('', 200)
 
 if __name__ == '__main__':
