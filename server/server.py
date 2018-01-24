@@ -13,7 +13,7 @@ def read_data():
     sensor_ID = str(rx_data['device']).lower()
     sensor_level = str(rx_data['data'])
     sensor_rssi = str(rx_data['rssi'])
-    ts = time.time()
+    ts = str(time.time())
 
     try:
         con = psycopg2.connect(database='triethic', user='admin', password='KrOQpkWVZeZPGF4O')
