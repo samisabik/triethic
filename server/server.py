@@ -25,7 +25,7 @@ def read_data():
 
         if (sensor_level < full_limit):
 			cur.execute("SELECT sensor_location,email_alarm FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
-			print cursor.fetchone()
+			print cur.fetchone()
 			email = str(cur.fetchone()[0])
 			location = str(cur.fetchone()[1])
 			print "loc : " + location
