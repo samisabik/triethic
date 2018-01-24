@@ -11,8 +11,8 @@ def read_data():
 
     rx_data = request.get_json(silent=True)
     sensor_ID = str(rx_data['device']).lower()
-    sensor_level = rx_data['data']
-    sensor_rssi = rx_data['rssi']
+    sensor_level = int(rx_data['data'])
+    sensor_rssi = int(rx_data['rssi'])
     ts = time.time()
 
     try:
