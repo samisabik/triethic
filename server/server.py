@@ -24,15 +24,15 @@ def read_data():
         cur.execute("UPDATE device_list SET last_value = " + str(sensor_level) + ",last_seen = " + str(ts) + ",last_rssi = " + str(sensor_rssi) + " WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 
         if (sensor_level < full_limit):
-        	cur.execute("SELECT email_alarm FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
+			cur.execute("SELECT email_alarm FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 			email = cur.fetchall()
- 			cur.execute("SELECT sensor_location FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
- 			location = cur.fetchall()
- 			server = smtplib.SMTP('smtp.gmail.com', 587)
- 			server.login("triethic.sensor@gmail.com", "EEbsoYoy")
- 			msg = "I'm full at " + location + " ! Please empty me :)"
- 			server.sendmail("triethic.sensor@gmail.com", email, msg)
- 			cur.execute("UPDATE device_list SET alarm = TRUE WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
+			cur.execute("SELECT sensor_location FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
+			location = cur.fetchall()
+			server = smtplib.SMTP('smtp.gmail.com', 587)
+			server.login("triethic.sensor@gmail.com", "EEbsoYoy")
+			msg = "I'm full at " + location + " ! Please empty me :)"
+			server.sendmail("triethic.sensor@gmail.com", email, msg)
+			cur.execute("UPDATE device_list SET alarm = TRUE WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 
         else:
         	cur.execute("UPDATE device_list SET alarm = FALSE WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
