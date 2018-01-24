@@ -25,9 +25,9 @@ def read_data():
 
         if (sensor_level < full_limit):
 			cur.execute("SELECT email_alarm FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
-			email = cur.fetchall()
+			email = str(cursor.fetchone()['email_alarm'])
 			cur.execute("SELECT sensor_location FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
-			location = cur.fetchall()
+			location = str(cursor.fetchone()['sensor_location'])
 			server = smtplib.SMTP('smtp.gmail.com:587')
 			server.ehlo()
 			server.starttls()
