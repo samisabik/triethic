@@ -20,7 +20,7 @@ def read_data():
 
         cur.execute("UPDATE device_list SET last_value = " + sensor_level + " WHERE device_id = '" + sensor_ID + "'")
 
-        cur.execute("INSERT INTO d_" + sensor_ID + "(ts,data) VALUES(" + sensor_level +",'"+ str(time) +"')")
+        cur.execute("INSERT INTO d_" + sensor_ID + "(time,data) VALUES(" + sensor_level +",'"+ str(time) +"')")
         con.commit()
 
     except psycopg2.DatabaseError, e:
