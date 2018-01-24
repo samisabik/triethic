@@ -22,7 +22,7 @@ def read_data():
         if (rx_data['data'] < 30):
         	cur.execute("UPDATE device_list SET alarm = TRUE WHERE device_id = 'd_" + sensor_ID + "'")
         else:
-        	cur.execute("UPDATE device_list SET alarm = FLASE WHERE device_id = 'd_" + sensor_ID + "'")
+        	cur.execute("UPDATE device_list SET alarm = FALSE WHERE device_id = 'd_" + sensor_ID + "'")
 
         con.commit()
 
