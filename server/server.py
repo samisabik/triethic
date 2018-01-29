@@ -39,8 +39,7 @@ def read_data():
         	cur.execute("UPDATE device_list SET alarm = FALSE WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
 
         con.commit()
-        time.sleep(180)
-
+        
     except psycopg2.DatabaseError, e:
         print 'Error %s' % e    
         sys.exit(1)
