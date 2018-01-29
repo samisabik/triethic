@@ -19,11 +19,12 @@
    <table class="table">
     <thead class="thead-dark">
      <tr>
-      <th width="10%">Capteur</th>
+      <th width="20%">Capteur</th>
       <th width="30%">Localisation</th>
       <th width="10%">Mesure</th>
       <th width="10%">Etat</th>
-      <th width="30%">Alarme email</th>
+      <th width="10%">Alerte</th>
+      <th width="30%">Alerte email</th>
      </tr>
     </thead>
     <tbody id="sensor_data">
@@ -53,15 +54,30 @@ $(document).ready(function(){
      +data[count].device_id+'">'+data[count].sensor_location+'</td>';
      html_data += '<td data-name="last_value" class="last_value" data-type="text" data-pk="'
      +data[count].device_id+'">'+data[count].last_value+' cm</td>';
-     html_data += '<td data-name="alarm" class="alarm" data-type="text" data-pk="'
+     html_data += '<td data-name="last_seen" class="last_seen" data-type="text" data-pk="'
      +data[count].device_id+'">';
-     if(data[count].alarm == "f") {
-      html_data += '<img src="assets/false.png" alt="FALSE" height="16" width="16"></td>'
-     }
-     else if(data[count].alarm == "t") {
-      html_data += '<img src="assets/true.png" alt="TRUE" height="16" width="16"></td>'
-     };
-     html_data += '<td data-name="email_alarm" class="email_alarm" data-type="text" data-pk="'+data[count].device_id+'">'+data[count].email_alarm+'</td></tr>';
+
+    var today = new Date();
+    var today = today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear();
+    var timestamp = new Date(data[count].last_seen*1000);
+    var timestamp = timestamp.getDate() + "-" + timestamp.getMonth() + "-" + timestamp.getFullYear();
+
+    if (timestamp == today) {
+      html_data += '<img src="assets/true.png" alt="ALIVE" height="16" width="16"></td>'
+    }
+    else {
+      html_data += '<img src="assets/false.png" alt="DEAD" height="16" width="16"></td>'
+    };
+
+    html_data += '<td data-name="alarm" class="alarm" data-type="text" data-pk="'+data[count].device_id+'">'
+    if (data[count].alarm == "t") {
+      html_data += '<img src="assets/false.png" alt="ALARM" height="16" width="16"></td>'
+    }
+    else {
+      html_data += '</td>'
+    };
+
+    html_data += '<td data-name="email_alarm" class="email_alarm" data-type="text" data-pk="'+data[count].device_id+'">'+data[count].email_alarm+'</td></tr>';
      $('#sensor_data').append(html_data);
     }
    }
