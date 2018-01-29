@@ -21,10 +21,10 @@ def read_data():
         con = psycopg2.connect(database='triethic', user='admin', password='KrOQpkWVZeZPGF4O')
         cur = con.cursor()
 
-        cur.execute("UPDATE device_list SET last_value = " + str(sensor_level) + ",last_seen = " + str(ts) + ",last_rssi = " + str(sensor_rssi) + " WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
-
+        cur.execute("UPDATE device_list SET last_value = " + str(sensor_level) + ",last_seen = " + str(ts) + ",last_rssi = " + str(sensor_rssi) + " WHERE device_id = '" + str(sensor_ID) + "'")
+        print str(sensor_ID)
         if (sensor_level < full_limit):
-			cur.execute("SELECT sensor_location,email_alarm FROM device_list WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
+			cur.execute("SELECT sensor_location,email_alarm FROM device_list WHERE device_id = '" + str(sensor_ID) + "'")
 			data_tmp = cur.fetchone()
 			email = str(data_tmp[1])
 			location = str(data_tmp[0])
@@ -34,9 +34,9 @@ def read_data():
 			server.login("triethic.sensor@gmail.com", "EEbsoYoy")
 			msg = "I'm full at " + str(location) + ". Please empty me !"
 			server.sendmail('triethic.sensor@gmail.com', email, msg)
-			cur.execute("UPDATE device_list SET alarm = TRUE WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
+			cur.execute("UPDATE device_list SET alarm = TRUE WHERE device_id = '" + str(sensor_ID) + "'")
         else:
-        	cur.execute("UPDATE device_list SET alarm = FALSE WHERE device_id = 'd_" + str(sensor_ID).lower() + "'")
+        	cur.execute("UPDATE device_list SET alarm = FALSE WHERE device_id = '" + str(sensor_ID) + "'")
 
         con.commit()
         
