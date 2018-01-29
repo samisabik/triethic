@@ -8,9 +8,11 @@
 #define   SENSOR_ECHO_PIN   8
 
 SoftwareSerial Sigfox =  SoftwareSerial(WISOL_RX_PIN, WISOL_TX_PIN);
-int data_s = 56;
+int data_s = 21;
 
 void setup() {
+
+  Serial.begin(9600);
 
   pinMode(WISOL_RX_PIN, INPUT);
   pinMode(WISOL_TX_PIN, OUTPUT);

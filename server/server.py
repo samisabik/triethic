@@ -22,7 +22,6 @@ def read_data():
         cur = con.cursor()
 
         cur.execute("UPDATE device_list SET last_value = " + str(sensor_level) + ",last_seen = " + str(ts) + ",last_rssi = " + str(sensor_rssi) + " WHERE device_id = '" + str(sensor_ID) + "'")
-        print str(sensor_ID)
         if (sensor_level < full_limit):
 			cur.execute("SELECT sensor_location,email_alarm FROM device_list WHERE device_id = '" + str(sensor_ID) + "'")
 			data_tmp = cur.fetchone()
