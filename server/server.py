@@ -34,7 +34,7 @@ def read_data():
 			server.starttls()
 			server.login("triethic.sensor@gmail.com", "EEbsoYoy")
             msg = "Le bac situe " + str(location) + " est plein."
-			server.sendmail('triethic.sensor@gmail.com', email, msg)
+            server.sendmail('triethic.sensor@gmail.com', email, msg)
 			cur.execute("UPDATE device_list SET alarm = TRUE WHERE device_id = '" + str(sensor_ID) + "'")
         else:
         	cur.execute("UPDATE device_list SET alarm = FALSE WHERE device_id = '" + str(sensor_ID) + "'")
