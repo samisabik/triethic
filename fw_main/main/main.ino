@@ -29,7 +29,6 @@ void setup() {
 
 void loop() {
     unsigned long startMillis = millis();
-    data_s = random(0, 100);
     sendMessage(data_s);
     while (millis() - startMillis < 300000);
 }
