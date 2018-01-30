@@ -21,6 +21,8 @@ def read_data():
         con = psycopg2.connect(database='triethic', user='admin', password='KrOQpkWVZeZPGF4O')
         cur = con.cursor()
 
+        cur.execute("INSERT INTO d_" + str(sensor_ID).lower() + "(timestamp, value) VALUES ('" + str(ts) + "," + str(sensor_level) + "')")
+
         cur.execute("UPDATE device_list SET last_value = " + str(sensor_level) + ",last_seen = " + str(ts) + ",last_rssi = " + str(sensor_rssi) + " WHERE device_id = '" + str(sensor_ID) + "'")
         if (sensor_level < full_limit):
 			cur.execute("SELECT sensor_location,email_alarm FROM device_list WHERE device_id = '" + str(sensor_ID) + "'")
