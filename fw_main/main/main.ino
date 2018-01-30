@@ -8,7 +8,7 @@
 #define   SENSOR_ECHO_PIN   8
 
 SoftwareSerial Sigfox =  SoftwareSerial(WISOL_RX_PIN, WISOL_TX_PIN);
-int data_s = 34;
+int data_s = 23;
 
 void setup() {
 
@@ -22,16 +22,16 @@ void setup() {
   Sigfox.begin(9600);
   delay(2000);  
   //debug
-  sendMessage(data_s);
-  Serial.println("... done!");
+  //sendMessage(data_s);
+  //Serial.println("... done!");
   
 }
 
 void loop() {
-    //unsigned long startMillis = millis();
-    //data_s = getDistance();
-    //sendMessage(data_s);
-    //while (millis() - startMillis < 300000);
+    unsigned long startMillis = millis();
+    data_s = random(0, 100);
+    sendMessage(data_s);
+    while (millis() - startMillis < 300000);
 }
 
 void sendMessage(int msg){
